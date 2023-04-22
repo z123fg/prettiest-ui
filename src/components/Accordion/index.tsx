@@ -1,5 +1,5 @@
-import React, { useState, ForwardedRef } from 'react'
-import { Wrapper } from './style'
+import React, { useState, ForwardedRef, Children } from 'react'
+import { Wrapper, AccordionRoot, AccordionHead } from './style'
 
 interface IProps {
     children: React.ReactNode,
@@ -32,9 +32,22 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
 }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
     const [expandState, setExpandState] = useState(defaultExpanded);
 
-    const handleChange = () => {
-        if (onChange) onChange()
-    }
+    /*
+        Accordion needs to have its first element as title，
+        when title is clicked, it will change its expand or collapsed state
+        The rest of the children will be its content    
+    */
+    const AccordionTitle = Children.toArray(children)[0] as React.ReactNode;
+    const AccordionContent = Children.toArray(children).slice(1) as React.ReactNode;
+
+    const handleChange = (e?: React.SyntheticEvent, expanded?: boolean) => {
+        if (onChange) onChange(e, expanded);
+    };
+
+    const handleSummaryClick = (e?: React.SyntheticEvent) => {
+        setExpandState(!expandState);
+        handleChange(e, expandState);
+    };
 
     return (
         <Wrapper
@@ -45,7 +58,12 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
             square={square}
             ref={ref}
         >
-            {children}
+            <AccordionHead onClick={handleSummaryClick}>
+                {AccordionTitle}
+            </AccordionHead>
+            <AccordionRoot>
+                {AccordionContent}
+            </AccordionRoot>
         </Wrapper>
     )
 })

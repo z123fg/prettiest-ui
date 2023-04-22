@@ -21,3 +21,11 @@ export const Wrapper = styled.div<{
         else return `4px`
     }};
 `
+
+export const AccordionRoot = styled.div`
+
+`
+
+export const AccordionHead = styled.div`
+
+`
