@@ -15,14 +15,7 @@ const Demo = () => {
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    <Typography>Accordion 1</Typography>
-                </AccordionSummary>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                // id="panel1a-header"
                 >
                     <Typography>Accordion 1</Typography>
                 </AccordionSummary>
@@ -34,28 +27,30 @@ const Demo = () => {
                 </AccordionSummary>
             </Accordion>
             <Accordion>
-                {/* <AccordionSummary
+                <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                > */}
-                <Typography>Accordion 2</Typography>
-                {/* </AccordionSummary> */}
-                {/* <AccordionDetails>
+                // id="panel2a-header"
+                >
+                    <Typography>Accordion 2</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
                     <Typography>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                         malesuada lacus ex, sit amet blandit leo lobortis eget.
                     </Typography>
-                </AccordionDetails> */}
+                </AccordionDetails>
             </Accordion>
             <Accordion disabled>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3a-content"
-                    id="panel3a-header"
+                // id="panel3a-header"
                 >
                     <Typography>Disabled Accordion</Typography>
                 </AccordionSummary>
+                <div>
+                    <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi veniam eaque, culpa possimus cumque officiis ab explicabo voluptas labore asperiores tempora illo? Minima, aliquam doloribus voluptatem cumque earum magni quaerat.</span>
+                </div>
             </Accordion>
         </div>
     )

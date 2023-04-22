@@ -58,7 +58,11 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
             square={square}
             ref={ref}
         >
-            <AccordionHead onClick={handleSummaryClick}>
+            <AccordionHead
+                onClick={handleSummaryClick}
+                expanded={expanded}
+                expandState={expandState}
+            >
                 {AccordionTitle}
             </AccordionHead>
             {/* 
