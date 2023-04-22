@@ -22,7 +22,10 @@ export const Wrapper = styled.div<{
     }};
 `
 
-export const AccordionRoot = styled.div`
+export const AccordionRoot = styled.div<{
+    expanded: boolean | undefined,
+    expandState: boolean
+}>`
 
 `
 

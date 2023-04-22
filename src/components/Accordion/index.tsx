@@ -33,20 +33,20 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
     const [expandState, setExpandState] = useState(defaultExpanded);
 
     /*
-        Accordion needs to have its first element as title，
-        when title is clicked, it will change its expand or collapsed state
+        Accordion needs to have its first child element as a clickable title，
+        when title is clicked, it will change its expanded or collapsed state
         The rest of the children will be its content    
     */
     const AccordionTitle = Children.toArray(children)[0] as React.ReactNode;
     const AccordionContent = Children.toArray(children).slice(1) as React.ReactNode;
 
-    const handleChange = (e?: React.SyntheticEvent, expanded?: boolean) => {
+    const handleChange = (e: React.SyntheticEvent, expanded: boolean) => {
         if (onChange) onChange(e, expanded);
     };
 
-    const handleSummaryClick = (e?: React.SyntheticEvent) => {
+    const handleSummaryClick = (e: React.SyntheticEvent) => {
         setExpandState(!expandState);
-        handleChange(e, expandState);
+        handleChange(e, !expandState);
     };
 
     return (
@@ -61,7 +61,14 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
             <AccordionHead onClick={handleSummaryClick}>
                 {AccordionTitle}
             </AccordionHead>
-            <AccordionRoot>
+            {/* 
+                By default, the expansion state is controlled by accordion's own state 
+                but if the user pass in the expanded prop, it will be controlled by the prop instead
+            */}
+            <AccordionRoot
+                expanded={expanded}
+                expandState={expandState}
+            >
                 {AccordionContent}
             </AccordionRoot>
         </Wrapper>
