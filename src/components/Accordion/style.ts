@@ -29,18 +29,16 @@ export const Wrapper = styled.div<{
         border-top-left-radius: 0;
         border-top-right-radius: 0;
     }
-    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     ${({ disabled }) =>
         disabled &&
         css`
             background-color: rgba(0, 0, 0, 0.12);
-            /* color: rgba(0, 0, 0, 0.87); */
             cursor: not-allowed;
             pointer-events: none;
-            & > * {
-                color: rgba(0, 0, 0, 0.87);
-            }
+            color: gray;
         `}
+
+    }};
 `;
 
 export const AccordionRoot = styled.div<{
@@ -56,6 +54,20 @@ export const AccordionRoot = styled.div<{
     }};
     transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+    margin-bottom: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "10px";
+        } else {
+            return expanded ? "0" : "10px";
+        }
+    }};
+    border-bottom: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "1px solid" : "0";
+        } else {
+            return expanded ? "0" : "1px solid";
+        }
+    }};
     /* padding: ${({ expandState, expanded }) => {
         if (!expanded) {
             return expandState ? "0" : "16px";
@@ -68,8 +80,10 @@ export const AccordionRoot = styled.div<{
 export const AccordionHead = styled.div<{
     expanded: boolean | undefined;
     expandState: boolean;
+    disabled: boolean;
 }>`
-    min-height: ${({ expandState, expanded }) => {
+    min-height: ${({ expandState, expanded, disabled }) => {
+        if (disabled) return "48px";
         if (!expanded) {
             return expandState ? "48px" : "64px";
         } else {
@@ -84,19 +98,29 @@ export const AccordionHead = styled.div<{
 
 export const AccordionArrow = styled.span<{
     expandState: boolean;
+    expanded: boolean | undefined;
+    disabled: boolean;
 }>`
     position: absolute;
     right: 20px;
-    top: ${({ expandState }) => {
-        if (expandState) return `32%`;
-        else return `45%32%`;
+    top: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "30%" : "32%";
+        } else {
+            return expanded ? "32%" : "30%";
+        }
     }};
     width: 10px;
     height: 10px;
     border-right: 2px solid grey;
     border-bottom: 2px solid grey;
-    transform: ${({ expandState }) => {
-        if (expandState) return `rotate(45deg);`;
-        else return `rotate(225deg);`;
+    transform: ${({ expandState, expanded, disabled }) => {
+        if (disabled) {
+            return "rotate(45deg)";
+        } else if (!expanded) {
+            return expandState ? "rotate(45deg)" : "rotate(225deg)";
+        } else {
+            return expanded ? "rotate(225deg)" : "rotate(45deg)";
+        }
     }};
 `;
