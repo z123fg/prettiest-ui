@@ -4,6 +4,7 @@ import {
     AccordionRoot,
     AccordionHead,
     AccordionArrow,
+    AccordionIcon,
 } from "./style";
 
 interface IProps {
@@ -19,9 +20,10 @@ interface IProps {
     variant?: "elevation" | "outlined";
     TransittionComponent?: boolean;
     TransitionProps?: object;
+    expandIcon?: any;
 }
 
-const Accordian = React.forwardRef<HTMLDivElement, IProps>(
+const Accordion = React.forwardRef<HTMLDivElement, IProps>(
     (
         {
             children,
@@ -36,6 +38,7 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
             variant = "elevation",
             TransittionComponent,
             TransitionProps,
+            expandIcon,
         }: IProps,
         ref: ForwardedRef<HTMLDivElement>
     ) => {
@@ -65,7 +68,6 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
             setExpandState(!expandState);
             handleChange(e, !expandState);
         };
-        console.log(disabled);
 
         return (
             <Wrapper
@@ -83,11 +85,21 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
                     disabled={disabled}
                 >
                     {AccordionTitle}
-                    <AccordionArrow
-                        expandState={expandState}
-                        expanded={expanded}
-                        disabled={disabled}
-                    />
+                    {expandIcon ? (
+                        <AccordionIcon
+                            expandState={expandState}
+                            expanded={expanded}
+                            disabled={disabled}
+                        >
+                            {expandIcon}
+                        </AccordionIcon>
+                    ) : (
+                        <AccordionArrow
+                            expandState={expandState}
+                            expanded={expanded}
+                            disabled={disabled}
+                        />
+                    )}
                 </AccordionHead>
                 {/* 
                 By default, the expansion state is controlled by accordion's own state 
@@ -106,4 +118,4 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
     }
 );
 
-export default Accordian;
+export default Accordion;

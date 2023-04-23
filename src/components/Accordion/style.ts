@@ -90,6 +90,15 @@ export const AccordionHead = styled.div<{
             return expanded ? "64px" : "48px";
         }
     }};
+
+    margin-top: ${({ expandState, expanded, disabled }) => {
+        if (disabled) return "0";
+        if (!expanded) {
+            return expandState ? "0" : "10px";
+        } else {
+            return expanded ? "0" : "10px";
+        }
+    }};
     display: flex;
     align-items: center;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -102,7 +111,7 @@ export const AccordionArrow = styled.span<{
     disabled: boolean;
 }>`
     position: absolute;
-    right: 20px;
+    right: 2.4%;
     top: ${({ expandState, expanded }) => {
         if (!expanded) {
             return expandState ? "30%" : "32%";
@@ -121,6 +130,33 @@ export const AccordionArrow = styled.span<{
             return expandState ? "rotate(45deg)" : "rotate(225deg)";
         } else {
             return expanded ? "rotate(225deg)" : "rotate(45deg)";
+        }
+    }};
+`;
+
+export const AccordionIcon = styled.span<{
+    expandState: boolean;
+    expanded: boolean | undefined;
+    disabled: boolean;
+}>`
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 1.7%;
+    top: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "24%" : "32%";
+        } else {
+            return expanded ? "32%" : "24%";
+        }
+    }};
+    transform: ${({ expandState, expanded, disabled }) => {
+        if (disabled) {
+            return "rotate(45deg)";
+        } else if (!expanded) {
+            return expandState ? "rotate(180deg)" : "rotate(0)";
+        } else {
+            return expanded ? "rotate(0)" : "rotate(180deg)";
         }
     }};
 `;

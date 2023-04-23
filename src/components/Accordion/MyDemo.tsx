@@ -1,11 +1,12 @@
-import React from "react";
-import Accordian from "./index";
+import Accordion from "./index";
 import styled from "styled-components";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddchartIcon from "@mui/icons-material/Addchart";
 
 const MyDemo = () => {
     return (
         <div style={{ margin: "80px auto 0", maxWidth: "800px" }}>
-            <Accordian>
+            <Accordion expandIcon={<AddchartIcon />}>
                 <Summary>
                     <span>Accordion 1</span>
                 </Summary>
@@ -19,9 +20,9 @@ const MyDemo = () => {
                         magni quaerat.
                     </span>
                 </Detail>
-            </Accordian>
+            </Accordion>
 
-            <Accordian disabled>
+            <Accordion disabled>
                 <Summary>
                     <span>Accordion 1</span>
                 </Summary>
@@ -35,9 +36,9 @@ const MyDemo = () => {
                         magni quaerat.
                     </div>
                 </Detail>
-            </Accordian>
+            </Accordion>
 
-            <Accordian>
+            <Accordion expandIcon={<ExpandMoreIcon />}>
                 <Summary>
                     <span>Accordion 2</span>
                 </Summary>
@@ -51,8 +52,8 @@ const MyDemo = () => {
                         magni quaerat.
                     </div>
                 </Detail>
-            </Accordian>
-            <Accordian>
+            </Accordion>
+            <Accordion>
                 <Summary>
                     <span>Accordion 4</span>
                 </Summary>
@@ -66,7 +67,7 @@ const MyDemo = () => {
                         magni quaerat.
                     </div>
                 </Detail>
-            </Accordian>
+            </Accordion>
         </div>
     );
 };
