@@ -87,12 +87,14 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
                 By default, the expansion state is controlled by accordion's own state 
                 but if the user pass in the expanded prop, it will be controlled by the prop instead
             */}
-                <AccordionRoot
-                    expanded={expanded}
-                    expandState={expandState}
-                >
-                    {AccordionContent}
-                </AccordionRoot>
+                {!disabled && (
+                    <AccordionRoot
+                        expanded={expanded}
+                        expandState={expandState}
+                    >
+                        {AccordionContent}
+                    </AccordionRoot>
+                )}
             </Wrapper>
         );
     }

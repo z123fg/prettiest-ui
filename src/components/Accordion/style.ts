@@ -30,7 +30,6 @@ export const Wrapper = styled.div<{
         border-top-right-radius: 0;
     }
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
     ${({ disabled }) =>
         disabled &&
         css`
@@ -89,15 +88,15 @@ export const AccordionArrow = styled.span<{
     position: absolute;
     right: 20px;
     top: ${({ expandState }) => {
-        if (expandState) return `45%`;
-        else return `32%`;
+        if (expandState) return `32%`;
+        else return `45%32%`;
     }};
     width: 10px;
     height: 10px;
     border-right: 2px solid grey;
     border-bottom: 2px solid grey;
     transform: ${({ expandState }) => {
-        if (expandState) return `rotate(225deg);`;
-        else return `rotate(45deg);`;
+        if (expandState) return `rotate(45deg);`;
+        else return `rotate(225deg);`;
     }};
 `;
