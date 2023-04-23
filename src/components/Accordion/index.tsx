@@ -8,9 +8,6 @@ import {
 
 interface IProps {
     children: React.ReactNode;
-    summary?: string;
-    detail?: string;
-    expandIcon?: string;
     className?: string;
     defaultExpanded?: boolean;
     disabled?: boolean;
@@ -28,8 +25,6 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
     (
         {
             children,
-            summary,
-            detail,
             className,
             defaultExpanded = false,
             disabled = false,
@@ -71,37 +66,33 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
             handleChange(e, !expandState);
         };
 
-    return (
-        <Wrapper
-            className={className}
-            elevation={elevation}
-            disabled={disabled}
-            variant={variant}
-            square={square}
-            ref={ref}
-        >
-            <AccordionHead
-                onClick={handleSummaryClick}
-                expanded={expanded}
-                expandState={expandState}
+        return (
+            <Wrapper
+                className={className}
+                elevation={elevation}
+                disabled={disabled}
+                variant={variant}
+                square={square}
+                ref={ref}
             >
-                {AccordionTitle}
-            </AccordionHead>
-            {/* 
+                <AccordionHead
+                    onClick={handleSummaryClick}
+                    expanded={expanded}
+                    expandState={expandState}
+                >
+                    {AccordionTitle}
+                    <AccordionArrow expandState={expandState} />
+                </AccordionHead>
+                {/* 
                 By default, the expansion state is controlled by accordion's own state 
                 but if the user pass in the expanded prop, it will be controlled by the prop instead
             */}
-                <div>
-                    {expandState && (
-                        <AccordionRoot
-                            expanded={expanded}
-                            expandState={expandState}
-                            className="transitionDiv"
-                        >
-                            {detail}
-                        </AccordionRoot>
-                    )}
-                </div>
+                <AccordionRoot
+                    expanded={expanded}
+                    expandState={expandState}
+                >
+                    {AccordionContent}
+                </AccordionRoot>
             </Wrapper>
         );
     }
