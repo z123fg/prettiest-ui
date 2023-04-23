@@ -1,78 +1,109 @@
-import React, { useState, ForwardedRef, Children } from 'react'
-import { Wrapper, AccordionRoot, AccordionHead } from './style'
+import React, { useState, ForwardedRef, Children } from "react";
+import {
+    Wrapper,
+    AccordionRoot,
+    AccordionHead,
+    AccordionArrow,
+} from "./style";
 
 interface IProps {
-    children: React.ReactNode,
-    className?: string,
-    defaultExpanded?: boolean,
-    disabled?: boolean,
-    disableGutters?: boolean,
-    expanded?: boolean,
-    onChange?: (e?: React.SyntheticEvent, expanded?: boolean) => void,
-    square?: boolean,
-    elevation?: number,
-    variant?: 'elevation' | 'outlined',
-    TransittionComponent?: boolean,
-    TransitionProps?: object
+    children: React.ReactNode;
+    summary?: string;
+    detail?: string;
+    expandIcon?: string;
+    className?: string;
+    defaultExpanded?: boolean;
+    disabled?: boolean;
+    disableGutters?: boolean;
+    expanded?: boolean;
+    onChange?: (e?: React.SyntheticEvent, expanded?: boolean) => void;
+    square?: boolean;
+    elevation?: number;
+    variant?: "elevation" | "outlined";
+    TransittionComponent?: boolean;
+    TransitionProps?: object;
 }
 
-const Accordian = React.forwardRef<HTMLDivElement, IProps>(({
-    children,
-    className,
-    defaultExpanded = false,
-    disabled = false,
-    disableGutters = false,
-    expanded,
-    onChange,
-    square = false,
-    elevation = 1,
-    variant = 'elevation',
-    TransittionComponent,
-    TransitionProps,
-}: IProps, ref: ForwardedRef<HTMLDivElement>) => {
-    const [expandState, setExpandState] = useState(defaultExpanded);
+const Accordian = React.forwardRef<HTMLDivElement, IProps>(
+    (
+        {
+            children,
+            summary,
+            detail,
+            className,
+            defaultExpanded = false,
+            disabled = false,
+            disableGutters = false,
+            expanded,
+            onChange,
+            square = false,
+            elevation = 1,
+            variant = "elevation",
+            TransittionComponent,
+            TransitionProps,
+        }: IProps,
+        ref: ForwardedRef<HTMLDivElement>
+    ) => {
+        const [expandState, setExpandState] =
+            useState(defaultExpanded);
 
-    /*
+        /*
         Accordion needs to have its first child element as a clickable title，
         when title is clicked, it will change its expanded or collapsed state
         The rest of the children will be its content    
     */
-    const AccordionTitle = Children.toArray(children)[0] as React.ReactNode;
-    const AccordionContent = Children.toArray(children).slice(1) as React.ReactNode;
+        const AccordionTitle = Children.toArray(
+            children
+        )[0] as React.ReactNode;
+        const AccordionContent = Children.toArray(children).slice(
+            1
+        ) as React.ReactNode;
 
-    const handleChange = (e: React.SyntheticEvent, expanded: boolean) => {
-        if (onChange) onChange(e, expanded);
-    };
+        const handleChange = (
+            e: React.SyntheticEvent,
+            expanded: boolean
+        ) => {
+            if (onChange) onChange(e, expanded);
+        };
 
-    const handleSummaryClick = (e: React.SyntheticEvent) => {
-        setExpandState(!expandState);
-        handleChange(e, !expandState);
-    };
+        const handleSummaryClick = (e: React.SyntheticEvent) => {
+            setExpandState(!expandState);
+            handleChange(e, !expandState);
+        };
 
-    return (
-        <Wrapper
-            className={className}
-            elevation={elevation}
-            disabled={disabled}
-            variant={variant}
-            square={square}
-            ref={ref}
-        >
-            <AccordionHead onClick={handleSummaryClick}>
-                {AccordionTitle}
-            </AccordionHead>
-            {/* 
+        return (
+            <Wrapper
+                className={className}
+                elevation={elevation}
+                disabled={disabled}
+                variant={variant}
+                square={square}
+                ref={ref}
+            >
+                <AccordionHead onClick={handleSummaryClick}>
+                    {summary}
+                    <AccordionArrow
+                        expandState={expandState}
+                    ></AccordionArrow>
+                </AccordionHead>
+                {/* 
                 By default, the expansion state is controlled by accordion's own state 
                 but if the user pass in the expanded prop, it will be controlled by the prop instead
             */}
-            <AccordionRoot
-                expanded={expanded}
-                expandState={expandState}
-            >
-                {AccordionContent}
-            </AccordionRoot>
-        </Wrapper>
-    )
-})
+                <div>
+                    {expandState && (
+                        <AccordionRoot
+                            expanded={expanded}
+                            expandState={expandState}
+                            className="transitionDiv"
+                        >
+                            {detail}
+                        </AccordionRoot>
+                    )}
+                </div>
+            </Wrapper>
+        );
+    }
+);
 
-export default (Accordian)
+export default Accordian;
