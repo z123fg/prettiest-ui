@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div<{
     disabled?: boolean;
@@ -6,8 +6,8 @@ export const Wrapper = styled.div<{
     elevation: number;
     variant?: "elevation" | "outlined";
 }>`
-    width: 30%;
-    text-align: left;
+    cursor: pointer;
+    width: 100%;
     background-color: #ffffff;
     box-shadow: ${({ elevation, variant }) => {
         if (variant === "outlined") return `0`;
@@ -17,45 +17,61 @@ export const Wrapper = styled.div<{
     0px ${elevation}px ${1}px rgba(0, 0, 0, 0.14), 
     0px ${elevation}px ${1.5 * elevation}px rgba(0, 0, 0, 0.20)`;
     }};
-    border-radius: ${({ square }) => {
-        if (square) return `0`;
-        else return `4px`;
-    }};
-    transition: all 1s;
-`;
+    &:not(:last-child) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0
+    };
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0
+    };
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+     ${({ disabled }) => disabled && css`
+    background-color: rgba(0, 0, 0, 0.12);
+    /* color: rgba(0, 0, 0, 0.87); */
+    cursor: not-allowed;
+    pointer-events: none;
+     & > * {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  `}
+`
 
 export const AccordionRoot = styled.div<{
     expanded: boolean | undefined;
     expandState: boolean;
 }>`
-    padding: 8px 16px 16px;
-`;
+    max-height: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "150px"
+        } else {
+            return expanded ? "0" : "150px"
+        }
+    }};
+    transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    /* padding: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "16px"
+        } else {
+            return expanded ? "0" : "0"
+        }
+    }}; */
+`
 
-export const AccordionHead = styled.div`
-    position: relative;
-    padding: 8px 16px 16px;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.5;
-    letter-spacing: 0.00938em;
-    cursor: pointer;
-`;
-
-export const AccordionArrow = styled.span<{
-    expandState: boolean;
+export const AccordionHead = styled.div<{
+    expanded: boolean | undefined,
+    expandState: boolean
 }>`
-    position: absolute;
-    right: 20px;
-    top: ${({ expandState }) => {
-        if (expandState) return `45%`;
-        else return `32%`;
+    min-height: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "48px" : "64px"
+        } else {
+            return expanded ? "64px" : "48px"
+        }
     }};
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid;
-    border-bottom: 2px solid;
-    transform: ${({ expandState }) => {
-        if (expandState) return `rotate(225deg);`;
-        else return `rotate(45deg);`;
-    }};
-`;
+    display: flex;
+    align-items: center;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+`

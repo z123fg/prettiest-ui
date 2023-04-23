@@ -71,22 +71,23 @@ const Accordian = React.forwardRef<HTMLDivElement, IProps>(
             handleChange(e, !expandState);
         };
 
-        return (
-            <Wrapper
-                className={className}
-                elevation={elevation}
-                disabled={disabled}
-                variant={variant}
-                square={square}
-                ref={ref}
+    return (
+        <Wrapper
+            className={className}
+            elevation={elevation}
+            disabled={disabled}
+            variant={variant}
+            square={square}
+            ref={ref}
+        >
+            <AccordionHead
+                onClick={handleSummaryClick}
+                expanded={expanded}
+                expandState={expandState}
             >
-                <AccordionHead onClick={handleSummaryClick}>
-                    {summary}
-                    <AccordionArrow
-                        expandState={expandState}
-                    ></AccordionArrow>
-                </AccordionHead>
-                {/* 
+                {AccordionTitle}
+            </AccordionHead>
+            {/* 
                 By default, the expansion state is controlled by accordion's own state 
                 but if the user pass in the expanded prop, it will be controlled by the prop instead
             */}
