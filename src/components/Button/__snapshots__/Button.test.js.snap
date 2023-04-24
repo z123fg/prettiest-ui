@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`button component snapshot test 1`] = `
+<DocumentFragment>
+  <button
+    class="btn btn-primary-contained btn-medium"
+  >
+    Submit!
+  </button>
+</DocumentFragment>
+`;

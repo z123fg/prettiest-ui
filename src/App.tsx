@@ -7,7 +7,7 @@ import MyButton from "./components/Button/Button"
 function App() {
   return (
     <div className="App">
-      <MyButton variant="outlined" >submit</MyButton>
+      <MyButton variant="outlined"  >submit</MyButton>
     </div>
   );
 }
