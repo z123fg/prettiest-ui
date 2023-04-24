@@ -76,6 +76,9 @@ const Accordion = React.forwardRef<HTMLDivElement, IProps>(
                 disabled={disabled}
                 variant={variant}
                 square={square}
+                expanded={expanded}
+                expandState={expandState}
+                disableGutters={disableGutters}
                 ref={ref}
             >
                 <AccordionHead

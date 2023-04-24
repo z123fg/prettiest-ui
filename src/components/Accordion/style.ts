@@ -5,15 +5,17 @@ export const Wrapper = styled.div<{
     square?: boolean;
     elevation: number;
     variant?: "elevation" | "outlined";
+    expanded: boolean | undefined;
+    expandState: boolean;
+    disableGutters: boolean;
 }>`
     cursor: pointer;
     width: 100%;
     background-color: #ffffff;
     box-shadow: ${({ elevation, variant }) => {
         if (variant === "outlined") return `0`;
-        return `0px ${elevation}px ${
-            2 * elevation
-        }px rgba(0, 0, 0, 0.12), 
+        return `0px ${elevation}px ${2 * elevation
+            }px rgba(0, 0, 0, 0.12), 
     0px ${elevation}px ${1}px rgba(0, 0, 0, 0.14), 
     0px ${elevation}px ${1.5 * elevation}px rgba(0, 0, 0, 0.20)`;
     }};
@@ -37,44 +39,15 @@ export const Wrapper = styled.div<{
             pointer-events: none;
             color: gray;
         `}
-
-    }};
-`;
-
-export const AccordionRoot = styled.div<{
-    expanded: boolean | undefined;
-    expandState: boolean;
-}>`
-    max-height: ${({ expandState, expanded }) => {
+    margin: ${({ expandState, expanded, disableGutters, disabled }) => {
+        if (disableGutters || disabled) return "0";
         if (!expanded) {
-            return expandState ? "0" : "150px";
+            return expandState ? "0" : "16px 0";
         } else {
-            return expanded ? "0" : "150px";
+            return expanded ? "0" : "16px 0";
         }
     }};
-    transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    margin-bottom: ${({ expandState, expanded }) => {
-        if (!expanded) {
-            return expandState ? "0" : "10px";
-        } else {
-            return expanded ? "0" : "10px";
-        }
-    }};
-    border-bottom: ${({ expandState, expanded }) => {
-        if (!expanded) {
-            return expandState ? "1px solid" : "0";
-        } else {
-            return expanded ? "0" : "1px solid";
-        }
-    }};
-    /* padding: ${({ expandState, expanded }) => {
-        if (!expanded) {
-            return expandState ? "0" : "16px";
-        } else {
-            return expanded ? "0" : "0";
-        }
-    }}; */
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 export const AccordionHead = styled.div<{
@@ -90,19 +63,54 @@ export const AccordionHead = styled.div<{
             return expanded ? "64px" : "48px";
         }
     }};
-
-    margin-top: ${({ expandState, expanded, disabled }) => {
+    /* margin-top: ${({ expandState, expanded, disabled }) => {
         if (disabled) return "0";
         if (!expanded) {
             return expandState ? "0" : "10px";
         } else {
             return expanded ? "0" : "10px";
         }
-    }};
+    }}; */
     display: flex;
     align-items: center;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+`;
+
+export const AccordionRoot = styled.div<{
+    expanded: boolean | undefined;
+    expandState: boolean;
+}>`
+    max-height: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "150px";
+        } else {
+            return expanded ? "0" : "150px";
+        }
+    }};
+    transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    /* margin-bottom: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "16px";
+        } else {
+            return expanded ? "0" : "16px";
+        }
+    }}; */
+    border-bottom: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "1px solid" : "0";
+        } else {
+            return expanded ? "0" : "1px solid";
+        }
+    }};
+    /* padding: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "16px";
+        } else {
+            return expanded ? "0" : "0";
+        }
+    }}; */
 `;
 
 export const AccordionArrow = styled.span<{
