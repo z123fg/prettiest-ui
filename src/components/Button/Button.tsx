@@ -1,5 +1,10 @@
 import React, { FC, FunctionComponent, MouseEvent, ReactNode, useState, useEffect } from "react";
+/* 
+typescript compiler:
+  type checking
+  compiling
 
+*/
 type ButtonVariants = "contained" | "outlined" | "text";
 
 /* interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
