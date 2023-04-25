@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../Button/Button";
 
 type Props = {
@@ -9,95 +9,72 @@ type Props = {
 
 const Pagination = ({ count, defaultPage, disabled = false }: Props) => {
   const [currentPage, setCurrentPage] = useState(defaultPage || 6);
-  const [pages, setPages] = useState<{ display: boolean }[]>([]);
-
-  useEffect(() => {
-    const newPages = new Array(count).fill(0);
-    setPages(newPages);
-  }, [count]);
-
-  const hideButtons =
-    count > 4 && (currentPage >= 5 || currentPage < count - 4);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
   };
 
-  const showRightButtons = () => {
-    const buttonsArr = [];
-    if (currentPage < count - 1) {
-      for (let i = currentPage + 1; i < count - 1; i++) {
-        buttonsArr.push(
-          <Button onClick={() => goToPage(i)} disabled={disabled}>
-            {i}
-          </Button>
-        );
-      }
-    }
-    console.log(buttonsArr);
-    return buttonsArr;
-  };
-  return (
-    <div>
+  const showButtons = () => {
+    // Needs refactoring
+    const arr = [];
+    arr.push(
       <Button
         disabled={disabled || currentPage === 1}
         onClick={() => goToPage(currentPage - 1)}
       >
         {"<"}
       </Button>
-      {pages.length ? (
-        <Button
-          className={currentPage === 1 ? "reddd" : ""}
-          onClick={() => goToPage(2)}
-          disabled={disabled}
-        >
-          {1}
-        </Button>
-      ) : (
-        ""
-      )}
-
-      {currentPage >= 5 && <Button disabled={true}>...</Button>}
-      <Button onClick={() => goToPage(currentPage - 1)} disabled={disabled}>
-        {currentPage - 1}
-      </Button>
-      <Button
-        className={"reddd"}
-        onClick={() => goToPage(count - 1)}
-        disabled={disabled}
-      >
-        {currentPage}
-      </Button>
-      {currentPage < 9 && (
-        <Button onClick={() => goToPage(currentPage + 1)} disabled={disabled}>
-          {currentPage + 1}
-        </Button>
-      )}
-      {currentPage < count - 3 ? (
-        <Button disabled={true}>...</Button>
-      ) : (
-        showRightButtons()
-      )}
-
-      {pages.length ? (
-        <Button
-          className={currentPage === count ? "reddd" : ""}
-          onClick={() => goToPage(count - 1)}
-          disabled={disabled}
-        >
-          {count}
-        </Button>
-      ) : (
-        ""
-      )}
+    );
+    if (currentPage >= count - 3) {
+      for (let i = count - 4; i <= count; i++) {
+        arr.push(
+          <Button
+            className={currentPage === i ? "reddd" : ""}
+            onClick={() => goToPage(i)}
+            disabled={disabled}
+          >
+            {i}
+          </Button>
+        );
+      }
+    } else if (currentPage < 5) {
+      for (let i = 1; i <= 5; i++) {
+        arr.push(
+          <Button
+            className={currentPage === i ? "reddd" : ""}
+            onClick={() => goToPage(i)}
+            disabled={disabled}
+          >
+            {i}
+          </Button>
+        );
+      }
+    } else {
+      arr.push(<Button disabled={true}>...</Button>);
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        arr.push(
+          <Button
+            className={currentPage === i ? "reddd" : ""}
+            onClick={() => goToPage(i)}
+            disabled={disabled}
+          >
+            {i}
+          </Button>
+        );
+      }
+      arr.push(<Button disabled={true}>...</Button>);
+    }
+    arr.push(
       <Button
         disabled={disabled || currentPage === count}
         onClick={() => goToPage(currentPage + 1)}
       >
         {">"}
       </Button>
-    </div>
-  );
+    );
+    return arr;
+  };
+  return <div style={{ display: "flex" }}>{showButtons()}</div>;
 };
 
 export default Pagination;
