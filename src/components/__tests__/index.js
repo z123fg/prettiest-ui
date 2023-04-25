@@ -77,5 +77,37 @@ describe("Accordion children components", () => {
             await user.click(el);
             expect(callback).not.toBeCalled();
         }
-    })
+    });
+});
+
+describe("Accordion styling", () => {
+    it("should have gutter when expanded", () => {
+        render(
+            <Accordion />
+        )
+
+
+    });
+
+    it("when variant is outlined, remove box-shadow", () => {
+
+    });
+
+    it("Icon should change when user pass in props", () => {
+
+    });
+
+    it("elevation should change sccordin variant is elevation and elevation props change", () => {
+
+    });
+});
+
+describe("Accordion disabled props", () => {
+    it("gutter shouldn't work when disabled", () => {
+
+    });
+
+    it("Accordion is not clickable when disabled", () => {
+
+    });
 })
