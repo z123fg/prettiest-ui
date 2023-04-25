@@ -18,8 +18,8 @@ interface IProps {
     square?: boolean;
     elevation?: number;
     variant?: "elevation" | "outlined";
-    TransittionComponent?: boolean;
-    TransitionProps?: object;
+    // TransittionComponent?: boolean;
+    // TransitionProps?: object;
     expandIcon?: any;
 }
 
@@ -36,8 +36,8 @@ const Accordion = React.forwardRef<HTMLDivElement, IProps>(
             square = false,
             elevation = 1,
             variant = "elevation",
-            TransittionComponent,
-            TransitionProps,
+            // TransittionComponent,
+            // TransitionProps,
             expandIcon,
         }: IProps,
         ref: ForwardedRef<HTMLDivElement>

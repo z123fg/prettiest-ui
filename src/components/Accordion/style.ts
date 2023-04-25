@@ -90,18 +90,18 @@ export const AccordionRoot = styled.div<{
     }};
     transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    /* margin-bottom: ${({ expandState, expanded }) => {
-        if (!expanded) {
-            return expandState ? "0" : "16px";
-        } else {
-            return expanded ? "0" : "16px";
-        }
-    }}; */
     border-bottom: ${({ expandState, expanded }) => {
         if (!expanded) {
             return expandState ? "1px solid" : "0";
         } else {
             return expanded ? "0" : "1px solid";
+        }
+    }};
+    visibility: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "hidden" : "visible";
+        } else {
+            return expanded ? "hidden" : "visible";
         }
     }};
     /* padding: ${({ expandState, expanded }) => {
