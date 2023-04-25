@@ -42,9 +42,9 @@ export const Wrapper = styled.div<{
     margin: ${({ expandState, expanded, disableGutters, disabled }) => {
         if (disableGutters || disabled) return "0";
         if (!expanded) {
-            return expandState ? "0" : "16px 0";
+            return expandState ? "16px 0" : "0";
         } else {
-            return expanded ? "0" : "16px 0";
+            return expanded ? "16px 0" : "0";
         }
     }};
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -55,14 +55,15 @@ export const AccordionHead = styled.div<{
     expandState: boolean;
     disabled: boolean;
 }>`
-    min-height: ${({ expandState, expanded, disabled }) => {
+    /* min-height: ${({ expandState, expanded, disabled }) => {
         if (disabled) return "48px";
         if (!expanded) {
             return expandState ? "48px" : "64px";
         } else {
             return expanded ? "64px" : "48px";
         }
-    }};
+    }}; */
+    min-height: 48px;
     /* margin-top: ${({ expandState, expanded, disabled }) => {
         if (disabled) return "0";
         if (!expanded) {
@@ -71,6 +72,13 @@ export const AccordionHead = styled.div<{
             return expanded ? "0" : "10px";
         }
     }}; */
+      border-bottom: ${({ expandState, expanded }) => {
+        if (!expanded) {
+            return expandState ? "0" : "1px solid rgba(0, 0, 0, 0.2)";
+        } else {
+            return expanded ? "0" : "1px solid rgba(0, 0, 0, 0.2)";
+        }
+    }};
     display: flex;
     align-items: center;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,25 +91,25 @@ export const AccordionRoot = styled.div<{
 }>`
     max-height: ${({ expandState, expanded }) => {
         if (!expanded) {
-            return expandState ? "0" : "150px";
+            return expandState ? "150px" : "0";
         } else {
-            return expanded ? "0" : "150px";
+            return expanded ? "150px" : "0";
         }
     }};
     transition: all 240ms cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    border-bottom: ${({ expandState, expanded }) => {
+    /* border-bottom: ${({ expandState, expanded }) => {
         if (!expanded) {
-            return expandState ? "1px solid" : "0";
+            return expandState ? "0" : "1px solid";
         } else {
             return expanded ? "0" : "1px solid";
         }
-    }};
+    }}; */
     visibility: ${({ expandState, expanded }) => {
         if (!expanded) {
-            return expandState ? "hidden" : "visible";
+            return expandState ? "visible" : "hidden";
         } else {
-            return expanded ? "hidden" : "visible";
+            return expanded ? "visible" : "hidden";
         }
     }};
     /* padding: ${({ expandState, expanded }) => {

@@ -6,7 +6,7 @@ import AddchartIcon from "@mui/icons-material/Addchart";
 const MyDemo = () => {
     return (
         <div style={{ margin: "80px auto 0", maxWidth: "800px" }}>
-            <Accordion expandIcon={<AddchartIcon />}>
+            <Accordion expandIcon={<AddchartIcon />} defaultExpanded={true}>
                 <Summary>
                     <span>Accordion 1</span>
                 </Summary>
@@ -53,6 +53,21 @@ const MyDemo = () => {
                     </div>
                 </Detail>
             </Accordion>
+            <Accordion expandIcon={<ExpandMoreIcon />} disableGutters>
+                <Summary>
+                    <span>Accordion 2</span>
+                </Summary>
+                <Detail>
+                    <div>
+                        Lorem, ipsum dolor sit amet consectetur
+                        adipisicing elit. Quasi veniam eaque, culpa
+                        possimus cumque officiis ab explicabo voluptas
+                        labore asperiores tempora illo? Minima,
+                        aliquam doloribus voluptatem cumque earum
+                        magni quaerat.
+                    </div>
+                </Detail>
+            </Accordion>
             <Accordion>
                 <Summary>
                     <span>Accordion 4</span>
@@ -81,6 +96,6 @@ const Summary = styled.div`
 `;
 const Detail = styled.div`
     text-align: center;
-    margin: 12px 18px;
+    margin: 12px;
 `;
 export default MyDemo;

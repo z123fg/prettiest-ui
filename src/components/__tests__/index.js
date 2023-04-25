@@ -1,6 +1,7 @@
+/* eslint-disable testing-library/no-node-access */
 import Accordion from "../Accordion";
 import React from 'react';
-import { getByText, render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import 'jest-styled-components';
 
@@ -50,10 +51,10 @@ describe("Accordion children components", () => {
         const user = userEvent.setup();
 
         await user.click(screen.getByText("AccordionTitle"));
-        expect(screen.getByText("AccordionContent")).not.toBeVisible();
+        expect(screen.getByText("AccordionContent")).toBeVisible();
 
         await user.click(screen.getByText("AccordionTitle"));
-        expect(screen.getByText("AccordionContent")).toBeVisible();
+        expect(screen.getByText("AccordionContent")).not.toBeVisible();
     });
 
     it("Only the first child will become head", async () => {
@@ -81,33 +82,75 @@ describe("Accordion children components", () => {
 });
 
 describe("Accordion styling", () => {
-    it("should have gutter when expanded", () => {
-        render(
-            <Accordion />
+    it("should have gutter when expanded", async () => {
+        const { container } = render(
+            <Accordion data-testid="accordion" defaultExpanded={false}>
+                <div>AccordionTitle</div>
+            </Accordion>
         )
 
+        const user = userEvent.setup();
+        const accordion = container.firstChild;
 
+
+        expect(accordion).toHaveStyleRule("margin", "0");
+        await user.click(screen.getByText("AccordionTitle"));
+        expect(accordion).toHaveStyleRule("margin", "16px 0")
     });
 
     it("when variant is outlined, remove box-shadow", () => {
+        const { container } = render(
+            <Accordion variant="outlined" data-testid="accordion"></Accordion>
+        )
 
+        const accordion = container.firstChild;
+
+        expect(accordion).toHaveStyleRule("box-shadow", "0");
     });
 
-    it("Icon should change when user pass in props", () => {
+    // it("Icon should change when user pass in props", () => {
+    //     const { container } = render(
+    //         <Accordion variant="outlined" data-testid="accordion"></Accordion>
+    //     )
+    // });
 
-    });
+    it("elevation should change if variant is elevation and elevation props change", () => {
+        const { container } = render(
+            <Accordion variant="outlined"></Accordion>
+        );
 
-    it("elevation should change sccordin variant is elevation and elevation props change", () => {
-
+        const accordion = container.firstChild;
+        expect(accordion).toHaveStyleRule("box-shadow", "0");
     });
 });
 
 describe("Accordion disabled props", () => {
-    it("gutter shouldn't work when disabled", () => {
+    it("gutter shouldn't work when disabled", async () => {
+        const { container } = render(
+            <Accordion disableGutters={true} defaultExpanded={true}>
+                <h2>Title</h2>
+            </Accordion>
+        );
 
+        const accordion = container.firstChild;
+        const user = userEvent.setup();
+
+        expect(accordion).toHaveStyleRule("margin", "0");
+        await user.click(screen.getByText("Title"));
+        expect(accordion).toHaveStyleRule("margin", "0");
     });
 
-    it("Accordion is not clickable when disabled", () => {
+    it("Accordion is not clickable when disabled", async () => {
+        const handleClick = jest.fn();
 
+        const { container } = render(
+            <Accordion onChange={handleClick} disabled>
+                <h2>Title</h2>
+            </Accordion>
+        );
+
+        const accordion = container.firstChild;
+
+        expect(accordion).toHaveStyleRule("pointer-events", "none");
     });
 })
