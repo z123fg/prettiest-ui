@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <MyButton variant="outlined">submit</MyButton>
       <Pagination count={10} />
-      <MyPagination count={10} disabled={false} />
+      <MyPagination count={10} disabled={false} size="large" />
     </div>
   );
 }
