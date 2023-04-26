@@ -164,7 +164,11 @@ const Pagination = ({
       <Button
         size={size}
         variant={variant}
-        className={currentPage === count ? "reddd" : ""}
+        className={
+          currentPage === count
+            ? "reddd " + constructClassName()
+            : constructClassName()
+        }
         onClick={() => setCurrentPage(count)}
         disabled={disabled}
         color={color}
@@ -179,6 +183,7 @@ const Pagination = ({
         disabled={disabled || currentPage === count}
         onClick={() => setCurrentPage(currentPage + 1)}
         color={color}
+        className={constructClassName()}
       >
         {">"}
       </Button>
