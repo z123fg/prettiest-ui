@@ -7,11 +7,24 @@ import MyPagination from "./components/Pagination/Pagination";
 import Pagination from "@mui/material/Pagination";
 
 function App() {
+  const someFunction = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    newPage: number
+  ) => {
+    console.log(e, newPage);
+  };
   return (
     <div className="App">
       <MyButton variant="outlined">submit</MyButton>
-      <Pagination count={10} />
-      <MyPagination count={10} disabled={false} size="large" />
+      <Pagination count={10} color={"primary"} />
+      <MyPagination
+        count={10}
+        color="secondary"
+        disabled={false}
+        size="medium"
+        shape="rounded"
+        onChange={someFunction}
+      />
     </div>
   );
 }

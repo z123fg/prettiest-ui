@@ -5,84 +5,75 @@ type Props = {
   count: number;
   defaultPage?: number;
   disabled?: boolean;
-  variant?: "outlined" | "text";
+  variant?: "outlined" | "filled";
   size?: "small" | "medium" | "large";
   color?: "primary" | "secondary" | "default";
   shape?: "circular" | "rounded";
+  onChange?: (e: React.MouseEvent<HTMLButtonElement>, newPage: number) => void;
 };
 
 const Pagination = ({
   count,
-  defaultPage,
+  defaultPage = 1,
   disabled = false,
-  variant = "text",
+  variant = "filled",
   size = "medium",
   color = "default",
   shape = "circular",
+  onChange,
 }: Props) => {
-  const [currentPage, setCurrentPage] = useState(defaultPage || 6);
+  const [currentPage, setCurrentPage] = useState(defaultPage);
 
-  const constructClassName: () => string = () => {
-    let className = "";
-    if (shape === "circular") className += "circular-btn ";
-    return className;
+  // const constructClassName: () => string = () => {
+  //   let className = "";
+  //   if (shape === "circular") className += "circular-btn ";
+  //   else if(shape === "rounded") className += ""
+  //   return className;
+  // };
+  const changePage = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    newPage: number
+  ) => {
+    setCurrentPage(newPage);
+    onChange?.(e, newPage);
   };
+  const constructClassName = (i: number = -1) => {
+    const isActive = i === currentPage ? "isActive" : "notActive";
+    const colorVariantCls = `pagination-btn-${color}-${variant}-${isActive}`;
+    const sizeCls = `pagination-btn-${size}`;
+    const shapeCls = `pagination-btn-${shape}`;
+    return ["pagination-btn", colorVariantCls, sizeCls, shapeCls].join(" ");
+  };
+
   const showButtons = () => {
     // Needs refactoring
     const arr = [];
     arr.push(
-      <Button
-        size={size}
-        variant={variant}
+      <button
         disabled={disabled || currentPage === 1}
-        onClick={() => setCurrentPage(currentPage - 1)}
-        color={color}
+        onClick={(e) => changePage(e, currentPage - 1)}
         className={constructClassName()}
       >
         {"<"}
-      </Button>
+      </button>
     );
     arr.push(
       <Button
-        size={size}
-        variant={variant}
-        className={
-          currentPage === 1
-            ? "reddd " + constructClassName()
-            : constructClassName()
-        }
-        onClick={() => setCurrentPage(1)}
+        className={constructClassName(1)}
+        onClick={(e) => changePage(e, 1)}
         disabled={disabled}
-        color={color}
       >
         1
       </Button>
     );
     if (currentPage >= count - 3) {
-      arr.push(
-        <Button
-          variant={variant}
-          disabled={true}
-          size={size}
-          color={color}
-          className={constructClassName()}
-        >
-          &hellip;
-        </Button>
-      );
+      arr.push(<div className={constructClassName()}>&hellip;</div>);
       for (let i = count - 4; i <= count - 1; i++) {
         arr.push(
           <Button
-            size={size}
-            variant={variant}
-            className={
-              currentPage === i
-                ? "reddd " + constructClassName()
-                : constructClassName()
-            }
-            onClick={() => setCurrentPage(i)}
+            className={constructClassName(i)}
+            onClick={(e) => changePage(e, i)}
             disabled={disabled}
-            color={color}
           >
             {i}
           </Button>
@@ -92,97 +83,43 @@ const Pagination = ({
       for (let i = 2; i <= 5; i++) {
         arr.push(
           <Button
-            size={size}
-            variant={variant}
-            className={
-              currentPage === i
-                ? "reddd " + constructClassName()
-                : constructClassName()
-            }
-            onClick={() => setCurrentPage(i)}
+            className={constructClassName(i)}
+            onClick={(e) => changePage(e, i)}
             disabled={disabled}
-            color={color}
           >
             {i}
           </Button>
         );
       }
-      arr.push(
-        <Button
-          size={size}
-          variant={variant}
-          disabled={true}
-          color={color}
-          className={constructClassName()}
-        >
-          &hellip;
-        </Button>
-      );
+      arr.push(<div className={constructClassName()}>&hellip;</div>);
     } else {
-      arr.push(
-        <Button
-          size={size}
-          variant={variant}
-          disabled={true}
-          color={color}
-          className={constructClassName()}
-        >
-          &hellip;
-        </Button>
-      );
+      arr.push(<div className={constructClassName()}>&hellip;</div>);
       for (let i = currentPage - 1; i <= currentPage + 1; i++) {
         arr.push(
           <Button
-            size={size}
-            variant={variant}
-            className={
-              currentPage === i
-                ? "reddd " + constructClassName()
-                : constructClassName()
-            }
-            onClick={() => setCurrentPage(i)}
+            className={constructClassName(i)}
+            onClick={(e) => changePage(e, i)}
             disabled={disabled}
-            color={color}
           >
             {i}
           </Button>
         );
       }
-      arr.push(
-        <Button
-          size={size}
-          variant={variant}
-          disabled={true}
-          color={color}
-          className={constructClassName()}
-        >
-          &hellip;
-        </Button>
-      );
+      arr.push(<div className={constructClassName()}>&hellip;</div>);
     }
     arr.push(
       <Button
-        size={size}
-        variant={variant}
-        className={
-          currentPage === count
-            ? "reddd " + constructClassName()
-            : constructClassName()
-        }
-        onClick={() => setCurrentPage(count)}
+        className={constructClassName(count)}
+        onClick={(e) => changePage(e, count)}
         disabled={disabled}
-        color={color}
       >
         {count}
       </Button>
     );
     arr.push(
       <Button
-        size={size}
-        variant={variant}
         disabled={disabled || currentPage === count}
-        onClick={() => setCurrentPage(currentPage + 1)}
-        color={color}
+        onClick={(e) => changePage(e, currentPage + 1)}
         className={constructClassName()}
       >
         {">"}
